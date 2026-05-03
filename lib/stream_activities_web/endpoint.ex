@@ -15,6 +15,9 @@ defmodule StreamActivitiesWeb.Endpoint do
     websocket: [connect_info: [session: @session_options]],
     longpoll: [connect_info: [session: @session_options]]
 
+  socket "/socket", StreamActivitiesWeb.UserSocket,
+         websocket: true,
+         longpoll: false
   # Serve at "/" the static files from "priv/static" directory.
   #
   # When code reloading is disabled (e.g., in production),
@@ -49,5 +52,9 @@ defmodule StreamActivitiesWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Corsica,
+    origins: "http://localhost:3000",
+    allow_headers: ["content-type", "authorization"],
+    allow_methods: ["GET", "POST", "OPTIONS"]
   plug StreamActivitiesWeb.Router
 end
