@@ -52,7 +52,9 @@ defmodule StreamActivities.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
-      {:corsica, "~> 2.0"}
+      {:corsica, "~> 2.0"},
+      {:joken, "~> 2.6"},
+      {:dotenvy, "~> 0.8.0"}
     ]
   end
 

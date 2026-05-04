@@ -22,11 +22,17 @@ defmodule StreamActivitiesWeb.UserSocket do
   def id(socket), do: "user_socket:#{socket.assigns.user_id}"
 
   defp verify_jwt(token) do
-    # placeholder until you integrate Joken
-    # for now just extract the user_id so you can test
-    case token do
-      nil -> {:error, :missing_token}
-      _   -> {:ok, token}  # temporarily treat the token as the user_id
+    secret = Application.fetch_env!(:stream_activities, :jwt_secret)
+    signer = Joken.Signer.create("HS256", secret)
+
+    case Joken.verify(token, signer) do
+      {:ok, claims} ->
+        IO.inspect(claims, label: "CLAIMS")
+        user_id = claims["userId"]
+        {:ok, user_id}
+      {:error, reason} ->
+        IO.inspect(reason, label: "JWT ERROR")  # add this
+        {:error, reason}
     end
   end
 end

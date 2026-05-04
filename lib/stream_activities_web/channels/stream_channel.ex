@@ -3,7 +3,7 @@ defmodule StreamActivitiesWeb.StreamChannel do
 
   @impl true
   def join("stream:" <> stream_id, _params, socket) do
-    {:ok, assign(socket, :stream_id, String.to_integer(stream_id))}
+    {:ok, assign(socket, :stream_id, stream_id)}
   end
 
   @impl true

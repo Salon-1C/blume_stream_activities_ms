@@ -50,6 +50,9 @@
       <excludeFolder url="file://$MODULE_DIR$/doc" />
       <excludeFolder url="file://$MODULE_DIR$/logs" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/corsica" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/dotenvy" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/joken" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/jose" />
     </content>
     <orderEntry type="jdk" jdkName="asdf Elixir 1.19.5-otp-28" jdkType="Elixir SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -138,5 +141,17 @@
     <orderEntry type="library" name="hpack" level="project" />
     <orderEntry type="library" name="corsica" level="project" />
     <orderEntry type="library" name="ssl_verify_fun" level="project" />
+    <orderEntry type="library" name="joken" level="project" />
+    <orderEntry type="library" name="jose" level="project" />
+    <orderEntry type="library" name="junit_formatter" level="project" />
+    <orderEntry type="library" name="jsone" level="project" />
+    <orderEntry type="library" name="jsx" level="project" />
+    <orderEntry type="library" name="libdecaf" level="project" />
+    <orderEntry type="library" name="libsodium" level="project" />
+    <orderEntry type="library" name="ojson" level="project" />
+    <orderEntry type="library" name="poison" level="project" />
+    <orderEntry type="library" name="thoas" level="project" />
+    <orderEntry type="library" name="earmark" level="project" />
+    <orderEntry type="library" name="dotenvy" level="project" />
   </component>
 </module>
