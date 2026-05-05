@@ -4,11 +4,10 @@ defmodule StreamActivities.Chat.ChatMessage do
   import Ecto.Changeset
 
   schema "chat_messages" do
-    field :sender_id, :integer
+    field :sender_id, :string
     field :username, :string
     field :stream_id, :string
     field :message, :string
-    field :sent_at, :utc_datetime
 
     timestamps()
     end
