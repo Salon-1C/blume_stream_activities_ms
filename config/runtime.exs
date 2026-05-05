@@ -1,4 +1,9 @@
 import Config
+import Dotenvy
+
+source!([".env"])
+
+config :stream_activities, :jwt_secret, env!("JWT_SECRET", :string)
 
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
