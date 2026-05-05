@@ -1,7 +1,7 @@
 # StreamActivities
 
 To start your Phoenix server:
-
+* Make sure you have Elixir and Erlang installed
 * Run `mix setup` to install and setup dependencies
 * Run `mix ecto.create` to create the database
 * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`

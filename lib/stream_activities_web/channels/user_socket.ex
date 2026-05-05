@@ -6,8 +6,9 @@ defmodule StreamActivitiesWeb.UserSocket do
   @impl true
   def connect(%{"token" => token}, socket, _connect_info) do
     case verify_jwt(token) do
-      {:ok, user_id} ->
-        {:ok, assign(socket, :user_id, user_id)}
+      {:ok, user_id, username} ->
+        {:ok, socket
+         |> assign(:user_id, user_id) |> assign(:username, username)}
       {:error, _reason} ->
         :error
     end
@@ -29,7 +30,8 @@ defmodule StreamActivitiesWeb.UserSocket do
       {:ok, claims} ->
         IO.inspect(claims, label: "CLAIMS")
         user_id = claims["userId"]
-        {:ok, user_id}
+        username = claims["username"]
+        {:ok, user_id, username}
       {:error, reason} ->
         IO.inspect(reason, label: "JWT ERROR")  # add this
         {:error, reason}
