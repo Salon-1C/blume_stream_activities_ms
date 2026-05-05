@@ -24,16 +24,24 @@ defmodule StreamActivitiesWeb.UserSocket do
 
   defp verify_jwt(token) do
     secret = Application.fetch_env!(:stream_activities, :jwt_secret)
-    signer = Joken.Signer.create("HS256", secret)
 
-    case Joken.verify(token, signer) do
+    # Try HS256 first (short secret keys), then HS384 (longer keys).
+    # Java's jjwt selects the algorithm automatically based on key length,
+    # so we need to support both here.
+    result =
+      case Joken.verify(token, Joken.Signer.create("HS256", secret)) do
+        {:ok, claims} -> {:ok, claims}
+        {:error, _}   -> Joken.verify(token, Joken.Signer.create("HS384", secret))
+      end
+
+    case result do
       {:ok, claims} ->
         IO.inspect(claims, label: "CLAIMS")
-        user_id = claims["userId"]
+        user_id  = claims["userId"]
         username = claims["username"]
         {:ok, user_id, username}
       {:error, reason} ->
-        IO.inspect(reason, label: "JWT ERROR")  # add this
+        IO.inspect(reason, label: "JWT ERROR")
         {:error, reason}
     end
   end
