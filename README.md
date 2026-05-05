@@ -4,6 +4,7 @@ To start your Phoenix server:
 * Make sure you have Elixir and Erlang installed
 * Run `mix setup` to install and setup dependencies
 * Run `mix ecto.create` to create the database
+* Run `mix ecto.migrate` to run all migrations of the database
 * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 * Set the required environment variables in `.env` file (JWT_SECRET)
 
