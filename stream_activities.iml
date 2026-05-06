@@ -153,5 +153,7 @@
     <orderEntry type="library" name="thoas" level="project" />
     <orderEntry type="library" name="earmark" level="project" />
     <orderEntry type="library" name="dotenvy" level="project" />
+    <orderEntry type="library" name="joken" level="project" />
+    <orderEntry type="library" name="dotenvy" level="project" />
   </component>
 </module>

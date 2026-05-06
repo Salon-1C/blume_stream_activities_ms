@@ -11,9 +11,6 @@ defmodule StreamActivities.Chat do
     result = %ChatMessage{}
     |> ChatMessage.changeset(attrs)
     |> Repo.insert()
-
-    IO.inspect(result, label: "CREATE MESSAGE RESULT")
-
     result
   end
 

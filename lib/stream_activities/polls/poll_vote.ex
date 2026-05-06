@@ -7,7 +7,7 @@ defmodule StreamActivities.Polls.PollVote do
     field :user_id, :integer
     field :voted_at, :utc_datetime
 
-    belongs_to :poll, StreamActivities.Polls.Poll
+    belongs_to :poll, StreamActivities.Polls.Polls
     belongs_to :poll_option, StreamActivities.Polls.PollOption
   end
 

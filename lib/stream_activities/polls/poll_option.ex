@@ -8,7 +8,7 @@ defmodule StreamActivities.Polls.PollOption do
     field :final_vote_count, :integer
     field :final_percentage, :decimal
 
-    belongs_to :poll, StreamActivities.Polls.Poll
+    belongs_to :poll, StreamActivities.Polls.Polls
   end
 
   def changeset(option, attrs) do

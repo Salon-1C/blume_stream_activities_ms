@@ -36,7 +36,6 @@ defmodule StreamActivitiesWeb.UserSocket do
 
     case result do
       {:ok, claims} ->
-        IO.inspect(claims, label: "CLAIMS")
         user_id  = claims["userId"]
         username = claims["username"]
         {:ok, user_id, username}
