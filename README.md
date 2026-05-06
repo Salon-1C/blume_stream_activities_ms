@@ -1,6 +1,13 @@
 # StreamActivities
 
-To start your Phoenix server:
+This repository contains the Stream Activities microservice for the Blume application,
+which is a streaming service for teachers and students; this repo's responsibility is to handle 
+stream chat, interactions, polls, and other activities like quizzes, etc.
+
+The microservice is built with the Phoenix framework using Elixir and PostgreSQL for the database.
+
+To start the microservice server:
+
 * Make sure you have Elixir and Erlang installed
 * Run `mix setup` to install and setup dependencies
 * Run `mix ecto.create` to create the database
@@ -8,7 +15,7 @@ To start your Phoenix server:
 * Set the required environment variables in `.env` file (JWT_SECRET)
 * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Now the server is listening on port 4000 of localhost.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
