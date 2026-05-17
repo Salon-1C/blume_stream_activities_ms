@@ -1,0 +1,20 @@
+name: Deploy activities-ms to ECS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    uses: Salon-1C/infrastructure/.github/workflows/reusable-deploy-ecs.yml@main
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+    with:
+      ecr_repository: activities-ms
+      ecs_service: activities-ms
+      docker_context: .
