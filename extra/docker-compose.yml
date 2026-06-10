@@ -1,0 +1,29 @@
+# VM-only compose — runs blume_stream_activities_ms as a cluster node.
+# postgres_activities stays on the laptop, reached via Tailscale IP.
+
+services:
+  blume_stream_activities_ms:
+    build:
+      context: ./blume_stream_activities_ms
+      args:
+        - RELEASE_COOKIE=${RELEASE_COOKIE}
+    restart: no
+    environment:
+      PHX_SERVER: "true"
+      MIX_ENV: prod
+      PORT: "4000"
+      PHX_HOST: localhost
+      ELIXIR_ERL_OPTIONS: "+fnu"
+      JWT_SECRET: ${JWT_SECRET}
+      SECRET_KEY_BASE: ${ACTIVITIES_SECRET_KEY_BASE}
+      DATABASE_URL: postgresql://${ACTIVITIES_DB_USER:-blume}:${ACTIVITIES_DB_PASSWORD}@${TAILSCALE_IP_LAPTOP}:5432/${ACTIVITIES_DB_NAME:-stream_activities}
+      # ── Clustering ────────────────────────────────────────────────────────────
+      RELEASE_DISTRIBUTION: name
+      RELEASE_NODE: "activities@${TAILSCALE_IP_VM}"
+      RELEASE_COOKIE: ${RELEASE_COOKIE}          # must match laptop exactly
+      CLUSTER_NODES: "activities@${TAILSCALE_IP_LAPTOP},activities@${TAILSCALE_IP_VM}"
+      ERL_DIST_PORT: "9000"
+    ports:
+      - "4369:4369"
+      - "9000:9000"
+    network_mode: host
