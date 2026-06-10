@@ -10,7 +10,12 @@ defmodule StreamActivities.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      listeners: [Phoenix.CodeReloader]
+      listeners: [Phoenix.CodeReloader],
+      releases: [
+        stream_activities: [
+          cookie: System.get_env("RELEASE_COOKIE") || raise("RELEASE_COOKIE env var is not set")
+        ]
+      ]
     ]
   end
 
@@ -50,10 +55,10 @@ defmodule StreamActivities.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 1.0"},
       {:jason, "~> 1.2"},
-      {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
       {:corsica, "~> 2.0"},
       {:joken, "~> 2.6"},
+      {:libcluster, "~> 3.3"},
       {:dotenvy, "~> 0.8.0"}
     ]
   end

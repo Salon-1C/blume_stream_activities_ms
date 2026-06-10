@@ -1,4 +1,4 @@
-defmodule StreamActivities.Application do
+  defmodule StreamActivities.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -7,10 +7,11 @@ defmodule StreamActivities.Application do
 
   @impl true
   def start(_type, _args) do
+    topologies = Application.get_env(:libcluster, :topologies, [])
     children = [
+      {Cluster.Supervisor, [topologies, [name: StreamActivities.ClusterSupervisor]]},
       StreamActivitiesWeb.Telemetry,
       StreamActivities.Repo,
-      {DNSCluster, query: Application.get_env(:stream_activities, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: StreamActivities.PubSub},
       # Start a worker by calling: StreamActivities.Worker.start_link(arg)
       # {StreamActivities.Worker, arg},

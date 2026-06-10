@@ -12,29 +12,25 @@ end
 config :stream_activities, StreamActivitiesWeb.Endpoint,
        http: [port: String.to_integer(System.get_env("PORT", "4000"))]
 
-# --- START OF LIBCLUSTER CONFIGURATION ---
-# This runs in both dev and prod
-if config_env() in [:dev, :prod] do
-  cluster_nodes_env = System.get_env("CLUSTER_NODES") || ""
-
-  cluster_nodes =
-    cluster_nodes_env
+# ── Erlang clustering (libcluster) ────────────────────────────────────────────
+# CLUSTER_NODES is a comma-separated list of node names, e.g.:
+#   "activities@100.x.x.x,activities@100.y.y.y"
+# When not set (local dev with mix phx.server), clustering is simply skipped.
+if raw_nodes = System.get_env("CLUSTER_NODES") do
+  nodes =
+    raw_nodes
     |> String.split(",")
-    |> Enum.map(&String.trim/1)
-    |> Enum.reject(&(&1 == ""))
-    |> Enum.map(&String.to_atom/1)
+    |> Enum.map(&(&1 |> String.trim() |> String.to_atom()))
 
-  if cluster_nodes != [] do
-    config :libcluster,
-           topologies: [
-             phoenix_cluster: [
-               strategy: Cluster.Strategy.Epmd,
-               config: [hosts: cluster_nodes]
-             ]
+  config :libcluster,
+         topologies: [
+           blume_cluster: [
+             strategy: Cluster.Strategy.Epmd,
+             config: [hosts: nodes]
            ]
-  end
+         ]
 end
-# --- END OF LIBCLUSTER CONFIGURATION ---
+# ─────────────────────────────────────────────────────────────────────────────
 
 if config_env() == :prod do
   database_url =
@@ -47,11 +43,8 @@ if config_env() == :prod do
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
   config :stream_activities, StreamActivities.Repo,
-         # ssl: true,
          url: database_url,
          pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-           # For machines with several cores, consider starting multiple pools of `pool_size`
-           # pool_count: 4,
          socket_options: maybe_ipv6
 
   secret_key_base =
@@ -63,14 +56,12 @@ if config_env() == :prod do
 
   host = System.get_env("PHX_HOST") || "example.com"
 
-  config :stream_activities, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   port = String.to_integer(System.get_env("PORT", "4000"))
 
   config :stream_activities, StreamActivitiesWeb.Endpoint,
          url: [host: host, port: 443, scheme: "https"],
          http: [
-           # IPv4 all interfaces — works beautifully with native Tailscale
            ip: {0, 0, 0, 0},
            port: port
          ],
