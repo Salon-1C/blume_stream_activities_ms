@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
 WORKDIR /app
 ENV MIX_ENV=prod
 
+ARG RELEASE_COOKIE
+ENV RELEASE_COOKIE=$RELEASE_COOKIE
+
 COPY mix.exs mix.lock ./
 RUN mix deps.get --only prod
 
@@ -38,7 +41,6 @@ RUN chmod +x /app/docker-entrypoint.sh && chown blume:blume /app/docker-entrypoi
 USER blume
 ENV PHX_SERVER=true
 ENV MIX_ENV=prod
-ARG RELEASE_COOKIE
-ENV RELEASE_COOKIE=$RELEASE_COOKIE
+
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
