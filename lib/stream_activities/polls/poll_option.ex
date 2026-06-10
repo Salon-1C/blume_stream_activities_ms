@@ -8,13 +8,13 @@ defmodule StreamActivities.Polls.PollOption do
     field :final_vote_count, :integer
     field :final_percentage, :decimal
 
-    belongs_to :poll, StreamActivities.Polls.Polls
+    belongs_to :polls, StreamActivities.Polls.Polls
   end
 
   def changeset(option, attrs) do
     option
-    |> cast(attrs, [:description, :poll_id])
-    |> validate_required([:description, :poll_id])
+    |> cast(attrs, [:description, :polls_id])
+    |> validate_required([:description, :polls_id])
   end
 
 end

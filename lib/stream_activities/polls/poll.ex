@@ -1,7 +1,6 @@
 defmodule StreamActivities.Polls.Poll do
   @moduledoc false
 
-  import Ecto.Query
   alias StreamActivities.Repo
   alias StreamActivities.Polls.Polls
 
