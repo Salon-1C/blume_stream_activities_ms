@@ -1,6 +1,10 @@
 defmodule StreamActivitiesWeb.Router do
   use StreamActivitiesWeb, :router
 
+  scope "/", StreamActivitiesWeb do
+    get "/health", HealthController, :check
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
